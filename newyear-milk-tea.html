@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新年第一杯奶茶</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffe6f2 0%, #fff0f5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* 标题样式 */
+        .header {
+            margin-bottom: 30px;
+            color: #ff6b9d;
+            transition: all 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px rgba(255, 107, 157, 0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #ff85ab;
+        }
+        
+        /* 奶茶图片区域 */
+        .milk-tea-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 20px 0 40px;
+            transition: all 0.8s ease;
+        }
+        
+        .milk-tea {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ffb6c1 30%, #ffccd5 70%);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .milk-tea:hover {
+            transform: scale(1.05);
+        }
+        
+        .milk-tea::before {
+            content: "";
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: linear-gradient(45deg, #fff5f7 30%, #ffeef2 70%);
+            border-radius: 50%;
+            box-shadow: inset 0 0 20px rgba(255, 107, 157, 0.2);
+        }
+        
+        .milk-tea i {
+            font-size: 6rem;
+            color: #ff6b9d;
+            z-index: 1;
+            text-shadow: 3px 3px 0px rgba(255, 107, 157, 0.3);
+        }
+        
+        .bubble {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .bubble1 {
+            width: 30px;
+            height: 30px;
+            top: 10px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+        
+        .bubble2 {
+            width: 20px;
+            height: 20px;
+            top: 40px;
+            right: 30px;
+            animation-delay: 0.5s;
+        }
+        
+        .bubble3 {
+            width: 25px;
+            height: 25px;
+            bottom: 20px;
+            left: 40px;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* 问题文本 */
+        .question {
+            font-size: 1.8rem;
+            color: #ff6b9d;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0px rgba(255, 107, 157, 0.2);
+            padding: 0 10px;
+            line-height: 1.4;
+            transition: all 0.8s ease;
+        }
+        
+        /* 按钮区域 */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+            gap: 20px;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        
+        .button {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        
+        .button:active {
+            transform: scale(0.97);
+        }
+        
+        .yes-btn {
+            background: linear-gradient(to right, #ff6b9d, #ff8fab);
+            color: white;
+            order: 1;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .yes-btn:hover {
+            background: linear-gradient(to right, #ff5a8c, #ff7ea0);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+        }
+        
+        .no-btn {
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+            color: white;
+            order: 2;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .no-btn:hover {
+            background: linear-gradient(to right, #2cc4cf, #4a7e0);
+            box-shadow: 0 8px 20px rgba(91, 134, 229, 0.4);
+        }
+        
+        /* 隐藏状态 */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* 响应文本 - 固定在奶茶图标下方 */
+        .response-container {
+            position: absolute;
+            top: 520px; /* 放在奶茶图标下方 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 5;
+        }
+        
+        .response {
+            font-size: 2.5rem;
+            color: #ff6b9d;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 0px rgba(255, 107, 157, 0.3);
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .response.show {
+            opacity: 1;
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.1); }
+            10% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(20px) translateX(-50%); opacity: 0; }
+            100% { transform: translateY(0) translateX(-50%); opacity: 1; }
+        }
+        
+        .float-up {
+            animation: floatUp 0.8s ease forwards;
+        }
+        
+        /* 按钮被顶出的效果 */
+        .no-btn.pushed-out {
+            transform: translateY(100px) scale(0.5);
+            opacity: 0;
+        }
+        
+        /* 成功状态 */
+        .success .milk-tea-container {
+            transform: scale(1.2);
+            margin: 20px 0 100px; /* 增加下方间距给文字 */
+        }
+        
+        .success .header {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        .success .question {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .success .buttons-container {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        /* 适配小屏幕 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            .milk-tea-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .response-container {
+                top: 450px;
+            }
+            
+            .milk-tea i {
+                font-size: 5rem;
+            }
+            
+            .button {
+                padding: 15px 25px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>新年快乐 🎉</h1>
+            <p>祝蒋宁同学开启甜蜜的一年</p>
+        </div>
+        
+        <div class="milk-tea-container">
+            <div class="milk-tea pulse">
+                <i class="fas fa-mug-hot"></i>
+            </div>
+            <div class="bubble bubble1"></div>
+            <div class="bubble bubble2"></div>
+            <div class="bubble bubble3"></div>
+        </div>
+        
+        <div class="question">可以请我喝新年的第一杯奶茶吗？</div>
+        
+        <div class="buttons-container" id="buttonsContainer">
+            <button class="button yes-btn" id="yesBtn">可以</button>
+            <button class="button no-btn" id="noBtn">不要</button>
+        </div>
+        
+        <!-- 新增的响应文字容器 -->
+        <div class="response-container" id="responseContainer">
+            <div class="response heartbeat" id="responseText"></div>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        const responseText = document.getElementById('responseText');
+        const responseContainer = document.getElementById('responseContainer');
+        const question = document.querySelector('.question');
+        const milkTeaContainer = document.querySelector('.milk-tea-container');
+        const header = document.querySelector('.header');
+        const container = document.querySelector('.container');
+        
+        // 定义"不要"按钮的状态
+        let noButtonStage = 0;
+        const noButtonStages = [
+            {text: "不要", size: "normal"},
+            {text: "要不再想想？", size: "small"},
+            {text: "你认真的吗？", size: "smaller"},
+            {text: "不许选这个", size: "smallest"},
+            {text: "我会很生气", size: "tiny"}
+        ];
+        
+        // "可以"按钮的初始尺寸
+        let yesBtnScale = 1;
+        let yesBtnWidth = "auto";
+        
+        // "可以"按钮点击事件
+        yesBtn.addEventListener('click', function() {
+            // 添加成功状态类
+            container.classList.add('success');
+            
+            // 显示响应文本
+            responseText.textContent = "最爱你了！❤️";
+            responseContainer.classList.add('show');
+            responseContainer.classList.add('float-up');
+            
+            // 奶茶图标动画
+            milkTeaContainer.style.transform = 'scale(1.2)';
+            
+            // 延迟隐藏其他元素
+            setTimeout(() => {
+                header.style.opacity = '0';
+                question.style.opacity = '0';
+                buttonsContainer.style.opacity = '0';
+                
+                // 完全隐藏元素
+                setTimeout(() => {
+                    header.style.display = 'none';
+                    question.style.display = 'none';
+                    buttonsContainer.style.display = 'none';
+                }, 800);
+            }, 300);
+            
+            // 更改背景颜色
+            document.body.style.background = 'linear-gradient(135deg, #ffd6e0 0%, #ffecf1 100%)';
+            
+            // 添加心形动画效果
+            createHearts();
+        });
+        
+        // "不要"按钮点击事件
+        noBtn.addEventListener('click', function() {
+            // 给按钮添加抖动效果
+            noBtn.classList.add('shake');
+            setTimeout(() => {
+                noBtn.classList.remove('shake');
+            }, 500);
+            
+            // 增加阶段
+            noButtonStage++;
+            
+            // 如果超过阶段数量，保持在最后一个阶段
+            if (noButtonStage >= noButtonStages.length) {
+                noButtonStage = noButtonStages.length - 1;
+            }
+            
+            // 更新"不要"按钮的文本和样式
+            const currentStage = noButtonStages[noButtonStage];
+            noBtn.textContent = currentStage.text;
+            
+            // 每次点击都让"可以"按钮放大
+            yesBtnScale += 0.15;
+            yesBtn.style.transform = `scale(${yesBtnScale})`;
+            
+            // 根据阶段调整按钮大小和布局
+            switch(noButtonStage) {
+                case 1: // "要不再想想？"
+                    // "不要"按钮缩小并移到旁边
+                    noBtn.style.fontSize = "1.1rem";
+                    noBtn.style.padding = "16px 25px";
+                    noBtn.style.transform = "scale(0.9) translateX(-30px)";
+                    
+                    // "可以"按钮放大并居中
+                    yesBtn.style.fontSize = "1.4rem";
+                    yesBtn.style.padding = "20px 35px";
+                    yesBtn.style.margin = "0 auto";
+                    
+                    // 按钮容器改为横向布局
+                    buttonsContainer.style.flexDirection = "row";
+                    buttonsContainer.style.justifyContent = "center";
+                    buttonsContainer.style.alignItems = "center";
+                    buttonsContainer.style.gap = "15px";
+                    break;
+                    
+                case 2: // "你认真的吗？"
+                    // "不要"按钮再缩小
+                    noBtn.style.fontSize = "1rem";
+                    noBtn.style.padding = "14px 22px";
+                    noBtn.style.transform = "scale(0.8) translateX(-40px)";
+                    
+                    // "可以"按钮再放大
+                    yesBtn.style.fontSize = "1.5rem";
+                    yesBtn.style.padding = "22px 40px";
+                    yesBtn.style.transform = `scale(${yesBtnScale})`;
+                    
+                    // 调整容器布局
+                    buttonsContainer.style.gap = "10px";
+                    break;
+                    
+                case 3: // "不许选这个"
+                    // "不要"按钮再缩小
+                    noBtn.style.fontSize = "0.9rem";
+                    noBtn.style.padding = "12px 20px";
+                    noBtn.style.transform = "scale(0.7) translateX(-50px)";
+                    
+                    // "可以"按钮再放大
+                    yesBtn.style.fontSize = "1.6rem";
+                    yesBtn.style.padding = "24px 45px";
+                    yesBtn.style.transform = `scale(${yesBtnScale})`;
+                    
+                    // 调整容器布局
+                    buttonsContainer.style.gap = "5px";
+                    break;
+                    
+                case 4: // "我会很生气" - 最后一步
+                    // "不要"按钮最小化
+                    noBtn.style.fontSize = "0.8rem";
+                    noBtn.style.padding = "10px 18px";
+                    noBtn.style.transform = "scale(0.6) translateX(-60px)";
+                    
+                    // "可以"按钮最大化并充满容器
+                    yesBtn.style.fontSize = "1.7rem";
+                    yesBtn.style.padding = "26px 0";
+                    yesBtn.style.width = "100%";
+                    yesBtn.style.transform = `scale(${yesBtnScale + 0.2})`;
+                    
+                    // 将"不要"按钮顶出屏幕
+                    setTimeout(() => {
+                        noBtn.classList.add('pushed-out');
+                        
+                        // 延迟后隐藏按钮
+                        setTimeout(() => {
+                            noBtn.style.display = "none";
+                            // "可以"按钮完全占据容器
+                            buttonsContainer.style.gap = "0";
+                            buttonsContainer.style.flexDirection = "column";
+                            buttonsContainer.style.alignItems = "stretch";
+                        }, 500);
+                    }, 300);
+                    
+                    // 禁用"不要"按钮
+                    noBtn.disabled = true;
+                    noBtn.style.cursor = "not-allowed";
+                    break;
+            }
+        });
+        
+        // 创建心形动画效果
+        function createHearts() {
+            const colors = ['#ff6b9d', '#ff8fab', '#ffb6c1'];
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.zIndex = '9999';
+                    heart.style.opacity = '0.8';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.transform = 'translateY(0)';
+                    heart.style.transition = 'all 1s ease';
+                    
+                    document.body.appendChild(heart);
+                    
+                    // 动画
+                    setTimeout(() => {
+                        heart.style.transform = `translateY(-${Math.random() * 300 + 100}px) rotate(${Math.random() * 360}deg)`;
+                        heart.style.opacity = '0';
+                    }, 10);
+                    
+                    // 移除元素
+                    setTimeout(() => {
+                        document.body.removeChild(heart);
+                    }, 1200);
+                }, i * 100);
+            }
+        }
+        
+        // 初始加载时添加一些动画效果
+        window.addEventListener('load', function() {
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            
+            setTimeout(() => {
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
